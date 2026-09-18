@@ -25,6 +25,7 @@ int main()
 
     //sistema de compra
     int opcao,pagamento,troco,denovo;
+    int reinterar, pagadivid;
     
     painel(produtos,preco,quantidade);
 
@@ -54,6 +55,36 @@ int main()
                 {
                     troco = preco[opcao] - pagamento;
                     printf("Dinheiro insuficiente!!\nfalta R$%d\n", troco);
+                        do{
+                    printf("vc deseja colocar mais dinheiro:\n1-sim\n2-não\n");
+                    scanf("%d", &reinterar);
+
+                    if (reinterar == 1)
+                    {   
+                        
+                        printf("falta R$%d quanto vc vai colocar:\n", troco);
+                        scanf("%d", &pagadivid);
+                        troco = troco - pagadivid;
+                      
+                        
+                        if (troco >= 1)
+                        {
+                        printf("ainda esta faltando R$%d ", troco);
+                        continue;
+                        }
+
+
+
+                    }
+
+                    if (pagadivid >= troco )
+                    {
+                        troco = troco * -1;
+                        printf("pagamento concluido pegue sue item!!\nvc recebeu R$%d de troco\n ", troco);
+                        quantidade[opcao]--;
+                    }
+                        }while(troco <= 0);
+                     
 
 
                 }

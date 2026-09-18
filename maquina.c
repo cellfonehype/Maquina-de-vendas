@@ -1,6 +1,18 @@
 #include <stdio.h>
 
 
+int painel(char produtos[][30],int preco[], int quantidade[])
+{
+        printf("Bem vindo\nDigite oque vc deseja:\n");
+    for(int i = 0;i<8;i++)
+    {
+        printf("produto: %s      | preço: R$%d |      quantidade: %d |\n",
+             produtos[i],           preco[i],          quantidade[i]);
+
+    }
+}
+
+
 int main()
 {
     //layout da maquina de vendas
@@ -14,14 +26,7 @@ int main()
     //sistema de compra
     int opcao,pagamento,troco,denovo;
     
-
-    printf("Bem vindo\nDigite oque vc deseja:\n");
-    for(int i = 0;i<8;i++)
-    {
-        printf("produto: %s      | preço: R$%d |      quantidade: %d |\n", produtos[i], preco[i], quantidade[i]);
-
-    }
-
+    painel(produtos,preco,quantidade);
 
     do{
         printf("Escolha:\n");
@@ -49,6 +54,7 @@ int main()
                 {
                     troco = preco[opcao] - pagamento;
                     printf("Dinheiro insuficiente!!\nfalta R$%d\n", troco);
+
 
                 }
 

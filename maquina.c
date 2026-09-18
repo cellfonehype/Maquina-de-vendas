@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-linha(void){
+void linha(void){
     printf("==============================================================\n");
 }
 void painel(char produtos[][30],int preco[], int quantidade[])
@@ -18,6 +18,29 @@ void painel(char produtos[][30],int preco[], int quantidade[])
 
 }
 
+int transação(int preco[], int quantidade[], int opcao, int valor_pago)
+{
+    int troco;
+
+    if (valor_pago >= preco[opcao])
+    {
+        quantidade[opcao] --;
+        troco = valor_pago - preco[opcao];
+        linha();
+        printf("Compra feita com sucesso\nValor do seu troco R$%d\n", troco);
+        linha();
+
+        return 1;
+    }
+    else
+    {
+        troco = preco[opcao] - valor_pago;
+        printf("Compra recusada\nFalta R$%d",troco);
+
+        return 0;
+    }
+
+}
 
 int main()
 {
@@ -30,8 +53,8 @@ int main()
         6,5,6,3,7,5,4,8};
 
     //sistema de compra
-    int opcao,pagamento,troco,denovo;
-    int reinterar, pagadivid;
+    int opcao,pagamento;
+    
     
     painel(produtos,preco,quantidade);
 
@@ -50,69 +73,10 @@ int main()
             printf("Deposite o valor:");
             scanf("%d", &pagamento);
 
-                if(pagamento >= preco[opcao])
-                {   
-                    quantidade[opcao]--;
-                    troco = pagamento - preco[opcao];
-                    printf("Deposito aceito!!\nVc recebeu R$:%d de troco\n",troco);
+               transação(preco,quantidade,opcao,pagamento);
 
-                }
-                else if(pagamento < preco[opcao])
-                {
-                    troco = preco[opcao] - pagamento;
-                    printf("Dinheiro insuficiente!!\nfalta R$%d\n", troco);
-                        do{
-                    printf("vc deseja colocar mais dinheiro:\n1-sim\n2-não\n");
-                    scanf("%d", &reinterar);
-
-                    if (reinterar == 1)
-                    {   
-                        
-                        printf("falta R$%d quanto vc vai colocar:\n", troco);
-                        scanf("%d", &pagadivid);
-                        troco = troco - pagadivid;
-                      
-                        
-                        if (troco >= 1)
-                        {
-                        printf("ainda esta faltando R$%d ", troco);
-                        continue;
-                        }
-
-
-
-                    }
-
-                    if (pagadivid >= troco )
-                    {
-                        troco = troco * -1;
-                        printf("pagamento concluido pegue sue item!!\nvc recebeu R$%d de troco\n ", troco);
-                        
-                    }
-                        }while(troco <= 0);
-                     
-
-
-                }
-
-                printf("deseja comprar denovo:\n1-sim\n2-não\n");
-                scanf("%d", &denovo);
-
-
-                if(denovo == 1)
-                {
-                        for(int i = 0;i<8;i++)
-                        {
-                        printf("produto: %s      | preço: R$%d |      quantidade: %d |\n", produtos[i], preco[i], quantidade[i]);
-                            continue;
-                        }
-                }
-                else
-                {
-                    break;
-                }
         }
-        else if(quantidade[opcao] == 0 )
+        else if(opcao >= 0 && opcao < 8 && quantidade[opcao] == 0)
         {
             printf("Esse item esta fora de estoque\nEscolha outro ou saia com 0");
             continue;

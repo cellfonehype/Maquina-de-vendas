@@ -1,15 +1,21 @@
 #include <stdio.h>
 
-
-int painel(char produtos[][30],int preco[], int quantidade[])
-{
-        printf("Bem vindo\nDigite oque vc deseja:\n");
+linha(void){
+    printf("==============================================================\n");
+}
+void painel(char produtos[][30],int preco[], int quantidade[])
+{   
+    linha();
+        printf("                        !!BEM VINDO A LOJA!!\n");
+        printf("                       DIGITE OQUE VC PRECISA\n:");
+    linha();
     for(int i = 0;i<8;i++)
     {
-        printf("produto: %s      | preço: R$%d |      quantidade: %d |\n",
+        printf("produto: %-15s | preço: R$%-2d |      quantidade: %-2d |\n",
              produtos[i],           preco[i],          quantidade[i]);
-
+    
     }
+
 }
 
 
@@ -17,7 +23,7 @@ int main()
 {
     //layout da maquina de vendas
     char produtos[8][30] = {
-        "1-Coca", "2-Guarana", "3-Pepsi", "4-Agua", "5-Doritos", "6-Batata Chips", "7-Barra de chocolate", "8-Red Bull"};
+        "1-Coca", "2-Guarana", "3-Pepsi", "4-Agua", "5-Doritos", "6-Chips", "7-chocolate", "8-Red Bull"};
     int quantidade[8] = {
         9,2,2,5,10,5,12,7};
     int preco[8] = {
@@ -30,7 +36,7 @@ int main()
     painel(produtos,preco,quantidade);
 
     do{
-        printf("Escolha:\n");
+        printf("Escolha: ");
         scanf("%d", &opcao);
         opcao--;
         if(opcao <= -1)
@@ -81,7 +87,7 @@ int main()
                     {
                         troco = troco * -1;
                         printf("pagamento concluido pegue sue item!!\nvc recebeu R$%d de troco\n ", troco);
-                        quantidade[opcao]--;
+                        
                     }
                         }while(troco <= 0);
                      

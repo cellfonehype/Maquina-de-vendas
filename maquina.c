@@ -20,7 +20,7 @@ void painel(char produtos[][30],int preco[], int quantidade[])
 int transacao(int preco[], int quantidade[], int opcao, int valor_pago)
 {
     int troco,quitacao,escolha;
-    int falta, cont;
+    int falta;
 
     do{
     if (valor_pago >= preco[opcao])
@@ -31,7 +31,6 @@ int transacao(int preco[], int quantidade[], int opcao, int valor_pago)
         printf("Compra feita com sucesso\nValor do seu troco R$%d\n",troco);
         linha();
 
-        return 1;
     }
     else
     {   
@@ -41,59 +40,45 @@ int transacao(int preco[], int quantidade[], int opcao, int valor_pago)
         linha();
         printf("vc dejesa completar o valor:\n1-sim\n2-não\n");
         scanf("%d", &escolha);
+        linha();
         if(escolha == 2)
         {
-            printf("que pena\nvolte sempre!!");
+            printf("que pena\nvolte sempre!!\n");
+            return 2;
             break;
         }
         else if (escolha == 1)
         {
             linha();
-            printf("Quanto deseja colocar,\n falta R$%d",falta);
-            scanf("%d", quitacao);
+            printf("Quanto deseja colocar,\nfalta R$%d\n",falta);
+            scanf("%d", &quitacao);
             
-            cont = falta - quitacao;
+            valor_pago = valor_pago + quitacao;
 
-            if(cont >= preco[opcao])
+            if(valor_pago >= preco[opcao])
             {
+
+                troco = valor_pago-preco[opcao];
                 quantidade[opcao]--;
-                printf("compra realizada\nParabens!!\n");
+                printf("compra realizada\nParabens!!\nVc recebeu R$%d\n",troco);
+                break;
             }
-            else if(cont < preco[opcao])
+            else if(valor_pago < preco[opcao])
             {
                 continue;
             }
+            
 
         }
+        else
+        {
+            printf("opção invalida!!\n");
+        }
     }
-        return 0;
-    }while(valor_pago >= preco[opcao]);
-    
+    }while(valor_pago < preco[opcao]);
+    return 0;
 }
-/*int transacao_negada(int preco[], int quantidade[], int opcao, int valor_pago)
-{
-    int quitacao,escolha;
-    printf("Vc deseja pagar o restante:\n1-sim\n-2-não");
-    scanf("%d", &escolha);
 
-    if (escolha == 2)
-    {
-        printf("Que pena volte sempre\n");
-    }
-    else if(escolha == 1)
-    {   
-        do{
-        printf("Quanto vc deseja adicionar:");
-        scanf("%d", &quitacao);
-
-        valor_pago = 
-
-        }while(valor_pago >= preco[opcao]);
-    }
-
-
-
-*/
 
 
 
@@ -131,6 +116,10 @@ int main()
 
             int resultado_pagamento = transacao(preco,quantidade,opcao,pagamento);
 
+            if(resultado_pagamento == 2)
+            {
+                break;
+            }
         }
         else if(opcao >= 0 && opcao < 8 && quantidade[opcao] == 0)
         {
